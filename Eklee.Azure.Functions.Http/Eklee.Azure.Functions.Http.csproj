@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Authors>Eng-Keong David Lee</Authors>
     <Description>The purpose of this library is to help developers with dependency injection per HTTP request context. This is currently not available via the default dependency injection infrastructure.</Description>
     <RepositoryUrl>https://github.com/seekdavidlee/Eklee-Azure-Functions-Http.git</RepositoryUrl>

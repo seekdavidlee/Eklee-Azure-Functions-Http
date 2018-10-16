@@ -60,6 +60,6 @@ param(
 		Remove-Item -Path bin\Release\netstandard2.0\publish -Recurse
 		popd
 		Remove-Item $currentDir\*.nupkg
-		nuget.exe pack $app\$app.csproj -Properties Configuration=$buildConfig
+		nuget.exe pack $app\$app.csproj -Properties Configuration=$buildConfig -IncludeReferencedProjects
 	}
 	
