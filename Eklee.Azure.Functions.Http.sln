@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{7F93C2C9-76C9-4379-853F-B76FB850AB6B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1E8A2B7E-57FC-4DE9-ABA5-5A5E2E8AF33D}"
+	ProjectSection(SolutionItems) = preProject
+		cicd.ps1 = cicd.ps1
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E19D0176-FD9B-436F-80B0-ADD32EDC5C79}"
+	ProjectSection(SolutionItems) = preProject
+		Tests\Eklee.Azure.Functions.Http.Tests.postman_collection.json = Tests\Eklee.Azure.Functions.Http.Tests.postman_collection.json
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eklee.Azure.Functions.Http", "Eklee.Azure.Functions.Http\Eklee.Azure.Functions.Http.csproj", "{79534402-D0FA-4E47-85FE-AEE1D80FE6FD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eklee.Azure.Functions.Http.Example", "Examples\Eklee.Azure.Functions.Http.Example\Eklee.Azure.Functions.Http.Example.csproj", "{68A33F06-5B16-4E04-A123-E436E9C2229F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{79534402-D0FA-4E47-85FE-AEE1D80FE6FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79534402-D0FA-4E47-85FE-AEE1D80FE6FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79534402-D0FA-4E47-85FE-AEE1D80FE6FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79534402-D0FA-4E47-85FE-AEE1D80FE6FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68A33F06-5B16-4E04-A123-E436E9C2229F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68A33F06-5B16-4E04-A123-E436E9C2229F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68A33F06-5B16-4E04-A123-E436E9C2229F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68A33F06-5B16-4E04-A123-E436E9C2229F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{68A33F06-5B16-4E04-A123-E436E9C2229F} = {7F93C2C9-76C9-4379-853F-B76FB850AB6B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7D163B47-7F17-48D9-A6F0-C0F68A6B81BD}
+	EndGlobalSection
+EndGlobal

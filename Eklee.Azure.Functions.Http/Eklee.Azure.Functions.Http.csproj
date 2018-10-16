@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.1.0</Version>
+    <Authors>Eng-Keong David Lee</Authors>
+    <Description>The purpose of this library is to help developers with dependency injection per HTTP request context. This is currently not available via the default dependency injection infrastructure.</Description>
+    <RepositoryUrl>https://github.com/seekdavidlee/Eklee-Azure-Functions-Http.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>AutoFac, DI, Azure Functions, Dependency Injection</PackageTags>
+    <PackageReleaseNotes>Initial version to support simple Autofac dependency injection per HTTP request</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.8.1" />
+    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.23" />
+  </ItemGroup>
+
+</Project>

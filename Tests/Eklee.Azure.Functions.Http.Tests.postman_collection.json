@@ -1,0 +1,267 @@
+{
+	"info": {
+		"_postman_id": "b42d7575-6c1f-4834-bcce-91edbd243fc5",
+		"name": "Eklee.Azure.Functions.Http.Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "UseResolverToResolveADependency",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "32b35f73-a4fb-4f20-ae70-48af2243d407",
+						"exec": [
+							"var id = (new Date()).getTime();",
+							"pm.environment.set(\"someKeyId\", id);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "43cb5bb6-9332-4c55-a1ae-c5ea6ace7519",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Messages are present.\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.be.above(0);",
+							"});",
+							"",
+							"pm.test(\"Creating a new instance of SomeDomainA twice\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    var found = 0;",
+							"    ",
+							"    for(var i = 0; i < jsonData.length; i++) {",
+							"        var item =  jsonData[i];",
+							"        ",
+							"        if (item.indexOf(\"Creating a new instance of SomeDomainA\") > -1) {",
+							"            found++;",
+							"        }",
+							"    }",
+							"    ",
+							"    pm.expect(found).to.equal(2);",
+							"",
+							"});",
+							"",
+							"pm.test(\"Creating a new instance of SomeDomainB once\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    var found = 0;",
+							"    ",
+							"    for(var i = 0; i < jsonData.length; i++) {",
+							"        var item =  jsonData[i];",
+							"        ",
+							"        if (item.indexOf(\"Creating a new instance of SomeDomainB\") > -1) {",
+							"            found++;",
+							"        }",
+							"    }",
+							"    ",
+							"    pm.expect(found).to.equal(1);",
+							"",
+							"});",
+							"",
+							"pm.test(\"SomeDomainA use the same request context twice\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    var found = false;",
+							"    var id = pm.environment.get(\"someKeyId\");",
+							"    ",
+							"    for(var i = 0; i < jsonData.length; i++) {",
+							"        var item =  jsonData[i];",
+							"        ",
+							"        if (item.indexOf(\"SomeDomainA work:\") > -1) {",
+							"            ",
+							"            if (item.indexOf(id) > 0)",
+							"            found++;",
+							"",
+							"        }",
+							"    }",
+							"    ",
+							"    pm.expect(found).to.equal(2);",
+							"});",
+							"",
+							"",
+							"pm.test(\"SomeDomainB use the same request context once\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    var found = false;",
+							"    var id = pm.environment.get(\"someKeyId\");",
+							"    ",
+							"    for(var i = 0; i < jsonData.length; i++) {",
+							"        var item =  jsonData[i];",
+							"        ",
+							"        if (item.indexOf(\"SomeDomainB work:\") > -1) {",
+							"            ",
+							"            if (item.indexOf(id) > 0)",
+							"            found++;",
+							"",
+							"        }",
+							"    }",
+							"    ",
+							"    pm.expect(found).to.equal(1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-SomeKey",
+						"value": "{{someKeyId}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{endpoint}}/api/Function1",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"api",
+						"Function1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DirectlyResolveADependency",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "32b35f73-a4fb-4f20-ae70-48af2243d407",
+						"exec": [
+							"var id = (new Date()).getTime();",
+							"pm.environment.set(\"someKeyId\", id);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "43cb5bb6-9332-4c55-a1ae-c5ea6ace7519",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Messages are present.\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.be.above(0);",
+							"});",
+							"",
+							"pm.test(\"Creating a new instance of SomeDomainA twice\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    var found = 0;",
+							"    ",
+							"    for(var i = 0; i < jsonData.length; i++) {",
+							"        var item =  jsonData[i];",
+							"        ",
+							"        if (item.indexOf(\"Creating a new instance of SomeDomainA\") > -1) {",
+							"            found++;",
+							"        }",
+							"    }",
+							"    ",
+							"    pm.expect(found).to.equal(2);",
+							"",
+							"});",
+							"",
+							"pm.test(\"Creating a new instance of SomeDomainB once\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    var found = 0;",
+							"    ",
+							"    for(var i = 0; i < jsonData.length; i++) {",
+							"        var item =  jsonData[i];",
+							"        ",
+							"        if (item.indexOf(\"Creating a new instance of SomeDomainB\") > -1) {",
+							"            found++;",
+							"        }",
+							"    }",
+							"    ",
+							"    pm.expect(found).to.equal(1);",
+							"",
+							"});",
+							"",
+							"pm.test(\"SomeDomainA use the same request context twice\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    var found = false;",
+							"    var id = pm.environment.get(\"someKeyId\");",
+							"    ",
+							"    for(var i = 0; i < jsonData.length; i++) {",
+							"        var item =  jsonData[i];",
+							"        ",
+							"        if (item.indexOf(\"SomeDomainA work:\") > -1) {",
+							"            ",
+							"            if (item.indexOf(id) > 0)",
+							"            found++;",
+							"",
+							"        }",
+							"    }",
+							"    ",
+							"    pm.expect(found).to.equal(2);",
+							"});",
+							"",
+							"",
+							"pm.test(\"SomeDomainB use the same request context once\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    var found = false;",
+							"    var id = pm.environment.get(\"someKeyId\");",
+							"    ",
+							"    for(var i = 0; i < jsonData.length; i++) {",
+							"        var item =  jsonData[i];",
+							"        ",
+							"        if (item.indexOf(\"SomeDomainB work:\") > -1) {",
+							"            ",
+							"            if (item.indexOf(id) > 0)",
+							"            found++;",
+							"",
+							"        }",
+							"    }",
+							"    ",
+							"    pm.expect(found).to.equal(1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-SomeKey",
+						"value": "{{someKeyId}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{endpoint}}/api/Function2",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"api",
+						"Function2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
