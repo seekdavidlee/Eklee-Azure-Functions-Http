@@ -2,7 +2,7 @@
 
 The purpose of this library is to help developers with dependency injection per HTTP request context. This is currently not available via the default dependency injection infrastructure.
 
-## Usage
+## DI Usage
 
 In order to leverage this library, there are 3 steps. You would want to setup your DI, apply the ExecutionContextDependencyInjection attribute, and inject the ExecutionContext as a parameter in your function.
 
@@ -41,7 +41,7 @@ public static class Function1
     {
 ```
 
-## Usage:
+## Dependency Resolution Usage:
 
 Now, there are 2 extension methods you can use against the ExecutionContext. You can choose the Resolve method to resolve your dependency.
 
@@ -58,7 +58,7 @@ var myDomain = resolver.Get<IMyDomain>();
 myDomain.DoWork();
 ```
 
-## Domain usage:
+## Domain Usage:
 Note that we have already captured ILogger as well as the actual HttpRequest. So, if you can inject IHttpRequestContext to access the logger or Http request which is hanging off IHttpRequestContext.
 
 ```
@@ -75,5 +75,44 @@ public class MyDomain : IMyDomain
     {
         _requestContext.Logger.LogInformation("FOOBAR");
     }
+}
+```
+
+## Exception Handling Usage:
+To translate an exception-type to an HTTP response like Bad Request, you can implement the IExceptionHandler which will provide a way for the infrastructure code to recognize an exception type and return the correct HTTP response.
+
+```
+public class MyArgumentExceptionHandler : IExceptionHandler
+{
+    public ExceptionHandlerResult Handle(Exception ex)
+    {
+        if (ex.GetType() == typeof(ArgumentException))
+        {
+            return new ExceptionHandlerResult(true, new BadRequestObjectResult(new ErrorMessage { Message = ex.Message }));
+        }
+
+        return null;
+    }
+}
+```
+
+Remember to register the handler in your Module. You can register more than one.
+
+```
+builder.RegisterType<MyArgumentExceptionHandler>().As<IExceptionHandler>();
+builder.RegisterType<MyCustomExceptionHandler>().As<IExceptionHandler>();
+```
+
+To leverage the handlers, you will need to use the extension method Run.
+
+```
+[ExecutionContextDependencyInjection(typeof(MyModule))]
+[FunctionName("Function3")]
+public static async Task<IActionResult> Run3(
+    [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)]
+    HttpRequest req, ILogger log, ExecutionContext executionContext)
+{
+    // Example of how we can directly resolve a dependency.
+    return await executionContext.Run<IDtoDomain, DtoResponse>(domain => Task.FromResult(domain.DoWork()));
 }
 ```
