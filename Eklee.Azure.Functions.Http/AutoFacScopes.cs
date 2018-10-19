@@ -13,6 +13,7 @@ namespace Eklee.Azure.Functions.Http
             var builder = new ContainerBuilder();
             builder.RegisterModule((IModule)Activator.CreateInstance(moduleType));
             builder.RegisterType<HttpRequestContext>().As<IHttpRequestContext>().InstancePerLifetimeScope();
+            builder.RegisterType<ExceptionHandlerManager>().As<IExceptionHandlerManager>();
 
             var container = builder.Build();
             var scope = container.BeginLifetimeScope();

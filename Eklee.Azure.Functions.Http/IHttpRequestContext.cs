@@ -7,5 +7,6 @@ namespace Eklee.Azure.Functions.Http
     {
         HttpRequest Request { get; set; }
         ILogger Logger { get; set; }
+        T GetModelFromBody<T>();
     }
 }

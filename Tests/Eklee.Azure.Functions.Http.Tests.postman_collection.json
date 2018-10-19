@@ -6,262 +6,492 @@
 	},
 	"item": [
 		{
-			"name": "UseResolverToResolveADependency",
-			"event": [
+			"name": "Resolvers",
+			"item": [
 				{
-					"listen": "prerequest",
-					"script": {
-						"id": "32b35f73-a4fb-4f20-ae70-48af2243d407",
-						"exec": [
-							"var id = (new Date()).getTime();",
-							"pm.environment.set(\"someKeyId\", id);"
+					"name": "UseResolverToResolveADependency",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "32b35f73-a4fb-4f20-ae70-48af2243d407",
+								"exec": [
+									"var id = (new Date()).getTime();",
+									"pm.environment.set(\"someKeyId\", id);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "43cb5bb6-9332-4c55-a1ae-c5ea6ace7519",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Messages are present.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.length).to.be.above(0);",
+									"});",
+									"",
+									"pm.test(\"Creating a new instance of SomeDomainA twice\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    ",
+									"    var found = 0;",
+									"    ",
+									"    for(var i = 0; i < jsonData.length; i++) {",
+									"        var item =  jsonData[i];",
+									"        ",
+									"        if (item.indexOf(\"Creating a new instance of SomeDomainA\") > -1) {",
+									"            found++;",
+									"        }",
+									"    }",
+									"    ",
+									"    pm.expect(found).to.equal(2);",
+									"",
+									"});",
+									"",
+									"pm.test(\"Creating a new instance of SomeDomainB once\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    ",
+									"    var found = 0;",
+									"    ",
+									"    for(var i = 0; i < jsonData.length; i++) {",
+									"        var item =  jsonData[i];",
+									"        ",
+									"        if (item.indexOf(\"Creating a new instance of SomeDomainB\") > -1) {",
+									"            found++;",
+									"        }",
+									"    }",
+									"    ",
+									"    pm.expect(found).to.equal(1);",
+									"",
+									"});",
+									"",
+									"pm.test(\"SomeDomainA use the same request context twice\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    ",
+									"    var found = false;",
+									"    var id = pm.environment.get(\"someKeyId\");",
+									"    ",
+									"    for(var i = 0; i < jsonData.length; i++) {",
+									"        var item =  jsonData[i];",
+									"        ",
+									"        if (item.indexOf(\"SomeDomainA work:\") > -1) {",
+									"            ",
+									"            if (item.indexOf(id) > 0)",
+									"            found++;",
+									"",
+									"        }",
+									"    }",
+									"    ",
+									"    pm.expect(found).to.equal(2);",
+									"});",
+									"",
+									"",
+									"pm.test(\"SomeDomainB use the same request context once\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    ",
+									"    var found = false;",
+									"    var id = pm.environment.get(\"someKeyId\");",
+									"    ",
+									"    for(var i = 0; i < jsonData.length; i++) {",
+									"        var item =  jsonData[i];",
+									"        ",
+									"        if (item.indexOf(\"SomeDomainB work:\") > -1) {",
+									"            ",
+									"            if (item.indexOf(id) > 0)",
+									"            found++;",
+									"",
+									"        }",
+									"    }",
+									"    ",
+									"    pm.expect(found).to.equal(1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-SomeKey",
+								"value": "{{someKeyId}}"
+							}
 						],
-						"type": "text/javascript"
-					}
+						"body": {},
+						"url": {
+							"raw": "{{endpoint}}/api/Function1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"Function1"
+							]
+						}
+					},
+					"response": []
 				},
 				{
-					"listen": "test",
-					"script": {
-						"id": "43cb5bb6-9332-4c55-a1ae-c5ea6ace7519",
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"Messages are present.\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.length).to.be.above(0);",
-							"});",
-							"",
-							"pm.test(\"Creating a new instance of SomeDomainA twice\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    ",
-							"    var found = 0;",
-							"    ",
-							"    for(var i = 0; i < jsonData.length; i++) {",
-							"        var item =  jsonData[i];",
-							"        ",
-							"        if (item.indexOf(\"Creating a new instance of SomeDomainA\") > -1) {",
-							"            found++;",
-							"        }",
-							"    }",
-							"    ",
-							"    pm.expect(found).to.equal(2);",
-							"",
-							"});",
-							"",
-							"pm.test(\"Creating a new instance of SomeDomainB once\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    ",
-							"    var found = 0;",
-							"    ",
-							"    for(var i = 0; i < jsonData.length; i++) {",
-							"        var item =  jsonData[i];",
-							"        ",
-							"        if (item.indexOf(\"Creating a new instance of SomeDomainB\") > -1) {",
-							"            found++;",
-							"        }",
-							"    }",
-							"    ",
-							"    pm.expect(found).to.equal(1);",
-							"",
-							"});",
-							"",
-							"pm.test(\"SomeDomainA use the same request context twice\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    ",
-							"    var found = false;",
-							"    var id = pm.environment.get(\"someKeyId\");",
-							"    ",
-							"    for(var i = 0; i < jsonData.length; i++) {",
-							"        var item =  jsonData[i];",
-							"        ",
-							"        if (item.indexOf(\"SomeDomainA work:\") > -1) {",
-							"            ",
-							"            if (item.indexOf(id) > 0)",
-							"            found++;",
-							"",
-							"        }",
-							"    }",
-							"    ",
-							"    pm.expect(found).to.equal(2);",
-							"});",
-							"",
-							"",
-							"pm.test(\"SomeDomainB use the same request context once\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    ",
-							"    var found = false;",
-							"    var id = pm.environment.get(\"someKeyId\");",
-							"    ",
-							"    for(var i = 0; i < jsonData.length; i++) {",
-							"        var item =  jsonData[i];",
-							"        ",
-							"        if (item.indexOf(\"SomeDomainB work:\") > -1) {",
-							"            ",
-							"            if (item.indexOf(id) > 0)",
-							"            found++;",
-							"",
-							"        }",
-							"    }",
-							"    ",
-							"    pm.expect(found).to.equal(1);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "X-SomeKey",
-						"value": "{{someKeyId}}"
-					}
-				],
-				"body": {},
-				"url": {
-					"raw": "{{endpoint}}/api/Function1",
-					"host": [
-						"{{endpoint}}"
+					"name": "DirectlyResolveADependency",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "32b35f73-a4fb-4f20-ae70-48af2243d407",
+								"exec": [
+									"var id = (new Date()).getTime();",
+									"pm.environment.set(\"someKeyId\", id);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "43cb5bb6-9332-4c55-a1ae-c5ea6ace7519",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Messages are present.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.length).to.be.above(0);",
+									"});",
+									"",
+									"pm.test(\"Creating a new instance of SomeDomainA twice\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    ",
+									"    var found = 0;",
+									"    ",
+									"    for(var i = 0; i < jsonData.length; i++) {",
+									"        var item =  jsonData[i];",
+									"        ",
+									"        if (item.indexOf(\"Creating a new instance of SomeDomainA\") > -1) {",
+									"            found++;",
+									"        }",
+									"    }",
+									"    ",
+									"    pm.expect(found).to.equal(2);",
+									"",
+									"});",
+									"",
+									"pm.test(\"Creating a new instance of SomeDomainB once\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    ",
+									"    var found = 0;",
+									"    ",
+									"    for(var i = 0; i < jsonData.length; i++) {",
+									"        var item =  jsonData[i];",
+									"        ",
+									"        if (item.indexOf(\"Creating a new instance of SomeDomainB\") > -1) {",
+									"            found++;",
+									"        }",
+									"    }",
+									"    ",
+									"    pm.expect(found).to.equal(1);",
+									"",
+									"});",
+									"",
+									"pm.test(\"SomeDomainA use the same request context twice\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    ",
+									"    var found = false;",
+									"    var id = pm.environment.get(\"someKeyId\");",
+									"    ",
+									"    for(var i = 0; i < jsonData.length; i++) {",
+									"        var item =  jsonData[i];",
+									"        ",
+									"        if (item.indexOf(\"SomeDomainA work:\") > -1) {",
+									"            ",
+									"            if (item.indexOf(id) > 0)",
+									"            found++;",
+									"",
+									"        }",
+									"    }",
+									"    ",
+									"    pm.expect(found).to.equal(2);",
+									"});",
+									"",
+									"",
+									"pm.test(\"SomeDomainB use the same request context once\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    ",
+									"    var found = false;",
+									"    var id = pm.environment.get(\"someKeyId\");",
+									"    ",
+									"    for(var i = 0; i < jsonData.length; i++) {",
+									"        var item =  jsonData[i];",
+									"        ",
+									"        if (item.indexOf(\"SomeDomainB work:\") > -1) {",
+									"            ",
+									"            if (item.indexOf(id) > 0)",
+									"            found++;",
+									"",
+									"        }",
+									"    }",
+									"    ",
+									"    pm.expect(found).to.equal(1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
 					],
-					"path": [
-						"api",
-						"Function1"
-					]
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-SomeKey",
+								"value": "{{someKeyId}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{endpoint}}/api/Function2",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"Function2"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "DirectlyResolveADependency",
-			"event": [
+			"name": "Responses",
+			"item": [
 				{
-					"listen": "prerequest",
-					"script": {
-						"id": "32b35f73-a4fb-4f20-ae70-48af2243d407",
-						"exec": [
-							"var id = (new Date()).getTime();",
-							"pm.environment.set(\"someKeyId\", id);"
+					"name": "Expect200WithGoodBody",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8e07cab7-b3e2-40f5-acf7-43c10e1b5665",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test response body is present.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.key1Result).to.eql(\"resultfoobar\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/javascript",
+								"type": "text"
+							}
 						],
-						"type": "text/javascript"
-					}
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"key1\": \"foobar\"\n}"
+						},
+						"url": {
+							"raw": "{{endpoint}}/api/Function3",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"Function3"
+							]
+						}
+					},
+					"response": []
 				},
 				{
-					"listen": "test",
-					"script": {
-						"id": "43cb5bb6-9332-4c55-a1ae-c5ea6ace7519",
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"Messages are present.\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.length).to.be.above(0);",
-							"});",
-							"",
-							"pm.test(\"Creating a new instance of SomeDomainA twice\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    ",
-							"    var found = 0;",
-							"    ",
-							"    for(var i = 0; i < jsonData.length; i++) {",
-							"        var item =  jsonData[i];",
-							"        ",
-							"        if (item.indexOf(\"Creating a new instance of SomeDomainA\") > -1) {",
-							"            found++;",
-							"        }",
-							"    }",
-							"    ",
-							"    pm.expect(found).to.equal(2);",
-							"",
-							"});",
-							"",
-							"pm.test(\"Creating a new instance of SomeDomainB once\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    ",
-							"    var found = 0;",
-							"    ",
-							"    for(var i = 0; i < jsonData.length; i++) {",
-							"        var item =  jsonData[i];",
-							"        ",
-							"        if (item.indexOf(\"Creating a new instance of SomeDomainB\") > -1) {",
-							"            found++;",
-							"        }",
-							"    }",
-							"    ",
-							"    pm.expect(found).to.equal(1);",
-							"",
-							"});",
-							"",
-							"pm.test(\"SomeDomainA use the same request context twice\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    ",
-							"    var found = false;",
-							"    var id = pm.environment.get(\"someKeyId\");",
-							"    ",
-							"    for(var i = 0; i < jsonData.length; i++) {",
-							"        var item =  jsonData[i];",
-							"        ",
-							"        if (item.indexOf(\"SomeDomainA work:\") > -1) {",
-							"            ",
-							"            if (item.indexOf(id) > 0)",
-							"            found++;",
-							"",
-							"        }",
-							"    }",
-							"    ",
-							"    pm.expect(found).to.equal(2);",
-							"});",
-							"",
-							"",
-							"pm.test(\"SomeDomainB use the same request context once\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    ",
-							"    var found = false;",
-							"    var id = pm.environment.get(\"someKeyId\");",
-							"    ",
-							"    for(var i = 0; i < jsonData.length; i++) {",
-							"        var item =  jsonData[i];",
-							"        ",
-							"        if (item.indexOf(\"SomeDomainB work:\") > -1) {",
-							"            ",
-							"            if (item.indexOf(id) > 0)",
-							"            found++;",
-							"",
-							"        }",
-							"    }",
-							"    ",
-							"    pm.expect(found).to.equal(1);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "X-SomeKey",
-						"value": "{{someKeyId}}"
-					}
-				],
-				"body": {},
-				"url": {
-					"raw": "{{endpoint}}/api/Function2",
-					"host": [
-						"{{endpoint}}"
+					"name": "Expect400WithInvalidBody",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "46e958ad-6b00-49a0-9269-03ba9413d821",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
 					],
-					"path": [
-						"api",
-						"Function2"
-					]
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"key1\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{endpoint}}/api/Function3",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"Function3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Expect400WithInvalidBodyFromCustomException",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "46e958ad-6b00-49a0-9269-03ba9413d821",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"key1\": \"a=b\"\n}"
+						},
+						"url": {
+							"raw": "{{endpoint}}/api/Function3",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"Function3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Expect400WithInvalidBodyFromArgException",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "46e958ad-6b00-49a0-9269-03ba9413d821",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"key1\": \"barone\"\n}"
+						},
+						"url": {
+							"raw": "{{endpoint}}/api/Function3",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"Function3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Expect500WithInvalidBodyFromAppException",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "46e958ad-6b00-49a0-9269-03ba9413d821",
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"key1\": \"bq:one\"\n}"
+						},
+						"url": {
+							"raw": "{{endpoint}}/api/Function3",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"Function3"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		}
 	]
 }
