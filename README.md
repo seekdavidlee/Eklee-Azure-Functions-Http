@@ -58,7 +58,7 @@ var myDomain = resolver.Get<IMyDomain>();
 myDomain.DoWork();
 ```
 
-## Domain Usage:
+## Azure Function Logger Usage:
 Note that we have already captured ILogger as well as the actual HttpRequest. So, if you can inject IHttpRequestContext to access the logger or Http request which is hanging off IHttpRequestContext.
 
 ```
