@@ -121,7 +121,7 @@ public static async Task<IActionResult> Run3(
 
 We can access user context from the Azure AD integration. Inject IHttpRequestContext into your domain and access the Security property. 
 
-See the following link for more information on this special header:
+See the following link for more information on these special headers:
 https://docs.microsoft.com/en-us/azure/app-service/app-service-authentication-how-to#access-user-claims
 
 
