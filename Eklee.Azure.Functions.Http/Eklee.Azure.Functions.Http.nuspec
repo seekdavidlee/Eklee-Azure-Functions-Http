@@ -2,15 +2,15 @@
 <package >
   <metadata>
     <id>Eklee.Azure.Functions.Http</id>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
     <title>Eklee.Azure.Functions.Http</title>
     <authors>Eng-Keong David Lee</authors>
     <owners>Eng-Keong David Lee</owners>
     <projectUrl>https://github.com/seekdavidlee/Eklee-Azure-Functions-Http</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The purpose of this library is to help developers with dependency injection per HTTP request context. This is currently not available via the default dependency injection infrastructure.</description>
-    <releaseNotes>Implement an opinionated means of rendering http responses based on exception-types.</releaseNotes>
-    <tags>AutoFac, DI, Azure Functions, Dependency Injection</tags>
+    <releaseNotes>Implement Azure AD headers parsing so consumers can perform any additional authorization work.</releaseNotes>
+    <tags>AutoFac, DI, Azure Functions, Dependency Injection, AzureAD, Http request</tags>
     <dependencies>
       <dependency id="Autofac" version="4.8.1" />
       <dependency id="Microsoft.NET.Sdk.Functions" version="1.0.23" />

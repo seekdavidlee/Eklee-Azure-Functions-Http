@@ -116,3 +116,18 @@ public static async Task<IActionResult> Run3(
     return await executionContext.Run<IDtoDomain, DtoResponse>(domain => Task.FromResult(domain.DoWork()));
 }
 ```
+
+## Azure AD integration
+
+We can access user context from the Azure AD integration. Inject IHttpRequestContext into your domain and access the Security property. 
+
+See the following link for more information on this special header:
+https://docs.microsoft.com/en-us/azure/app-service/app-service-authentication-how-to#access-user-claims
+
+
+```
+_httpRequestContext.Security.Principal.Name
+...
+_httpRequestContext.Security.Principal.Id
+```
+
