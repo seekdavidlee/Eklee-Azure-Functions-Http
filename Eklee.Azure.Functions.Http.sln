@@ -20,6 +20,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eklee.Azure.Functions.Http"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eklee.Azure.Functions.Http.Example", "Examples\Eklee.Azure.Functions.Http.Example\Eklee.Azure.Functions.Http.Example.csproj", "{68A33F06-5B16-4E04-A123-E436E9C2229F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eklee.Azure.Functions.Http.Tests", "Eklee.Azure.Functions.Http.Tests\Eklee.Azure.Functions.Http.Tests.csproj", "{1EDBCF5A-1CD6-45FC-978C-D9F906D8FC4E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +36,10 @@ Global
 		{68A33F06-5B16-4E04-A123-E436E9C2229F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68A33F06-5B16-4E04-A123-E436E9C2229F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68A33F06-5B16-4E04-A123-E436E9C2229F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EDBCF5A-1CD6-45FC-978C-D9F906D8FC4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EDBCF5A-1CD6-45FC-978C-D9F906D8FC4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EDBCF5A-1CD6-45FC-978C-D9F906D8FC4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EDBCF5A-1CD6-45FC-978C-D9F906D8FC4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,6 +2,12 @@ param(
 	[string]$message,
 	[string]$version)
 
+	$ErrorActionPreference = "Stop"
+
+	pushd Eklee.Azure.Functions.Http.Tests
+	dotnet test
+	popd
+
 	$buildConfig = "Release"
 	$app = "Eklee.Azure.Functions.Http"	
 
