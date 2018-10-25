@@ -133,9 +133,9 @@ _httpRequestContext.Security.Principal.Id
 
 ## Microsoft.Extensions.Configuration.IConfiguration Usage
 
-We can leverage IConfiguration directly to get settings stored locally in local.settings.json or on settings on Azure Web App instance. Inject IConfiguration into your domain
+We can leverage IConfiguration directly to get settings stored locally in local.settings.json or get settings stored in Azure Web App's Application settings.
 
-Here's an example of where you can determine if your Azure Function is running locally by using a common configuration value stored in local.settings.json.
+Here's an example of using IConfiguration to determine if your Azure Function is running locally by using a common configuration value stored in local.settings.json.
 
 ```
 using Microsoft.Extensions.Configuration;
