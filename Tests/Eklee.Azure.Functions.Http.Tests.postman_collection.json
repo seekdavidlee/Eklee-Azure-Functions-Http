@@ -490,6 +490,54 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Expect200AndTrueForLocalEnv",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8e07cab7-b3e2-40f5-acf7-43c10e1b5665",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test response body is present.\", function () {",
+									"    var jsonData = pm.response.text();",
+									"    pm.expect(jsonData).to.eql(\"true\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/javascript"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"key1\": \"foobar\"\n}"
+						},
+						"url": {
+							"raw": "{{endpoint}}/api/Function4",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"Function4"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

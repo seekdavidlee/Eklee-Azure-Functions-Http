@@ -35,6 +35,7 @@ namespace Eklee.Azure.Functions.Http
         {
             ILogger logger = null;
             HttpRequest httpRequest = null;
+            Microsoft.Azure.WebJobs.ExecutionContext executionContext = null;
 
             executingContext.Arguments.Keys.ToList().ForEach(key =>
             {
@@ -48,10 +49,14 @@ namespace Eklee.Azure.Functions.Http
                 {
                     httpRequest = (HttpRequest)o;
                 }
+                else if (o is Microsoft.Azure.WebJobs.ExecutionContext context)
+                {
+                    executionContext = context;
+                }
             });
 
             var instanceId = executingContext.FunctionInstanceId.ToString("N");
-            AutoFacScopes.Register(instanceId, _moduleType, httpRequest, logger);
+            AutoFacScopes.Register(instanceId, _moduleType, httpRequest, logger, executionContext);
             executingContext.Properties.Add(ScopeName, instanceId);
             return Task.CompletedTask;
         }
