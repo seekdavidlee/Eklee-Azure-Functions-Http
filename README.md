@@ -117,7 +117,7 @@ public static async Task<IActionResult> Run3(
 }
 ```
 
-## Azure AD integration
+## Azure AD integration Usage:
 
 We can access user context from the Azure AD integration. Inject IHttpRequestContext into your domain and access the Security property. 
 
@@ -131,3 +131,31 @@ _httpRequestContext.Security.Principal.Name
 _httpRequestContext.Security.Principal.Id
 ```
 
+## Microsoft.Extensions.Configuration.IConfiguration Usage
+
+We can leverage IConfiguration directly to get settings stored locally in local.settings.json or get settings stored in Azure Web App's Application settings.
+
+Here's an example of using IConfiguration to determine if your Azure Function is running locally by using a common configuration value stored in local.settings.json.
+
+```
+using Microsoft.Extensions.Configuration;
+
+namespace Eklee.Azure.Functions.Http.Example
+{
+    public class ConfigDomain : IConfigDomain
+    {
+        private readonly IConfiguration _configuration;
+
+        public ConfigDomain(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public bool IsLocalEnvironment()
+        {
+            var value = _configuration.GetValue<string>("AzureWebJobsStorage");
+            return value == "UseDevelopmentStorage=true";
+        }
+    }
+}
+```

@@ -12,6 +12,7 @@ namespace Eklee.Azure.Functions.Http.Example
             builder.RegisterType<SomeApiDomain>().As<ISomeApiDomain>();
             builder.RegisterType<MyHttpLogger>().As<IMyHttpLogger>().InstancePerLifetimeScope();
             builder.RegisterType<DtoDomain>().As<IDtoDomain>();
+            builder.RegisterType<ConfigDomain>().As<IConfigDomain>();
 
             builder.RegisterType<MyArgumentExceptionHandler>().As<IExceptionHandler>();
             builder.RegisterType<MyCustomExceptionHandler>().As<IExceptionHandler>();
