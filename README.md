@@ -1,6 +1,6 @@
 # Introduction
 
-The purpose of this library is to help developers with dependency injection per HTTP request context. This is currently not available via the default dependency injection infrastructure.
+The purpose of this library is to help developers with dependency injection per HTTP request context. This is currently not available via the default dependency injection infrastructure. A secondary goal is provide easy access to common infrastructure services such as security, logging, etc.
 
 ## DI Usage
 
@@ -131,7 +131,7 @@ _httpRequestContext.Security.Principal.Name
 _httpRequestContext.Security.Principal.Id
 ```
 
-## Microsoft.Extensions.Configuration.IConfiguration Usage
+## Microsoft.Extensions.Configuration.IConfiguration Usage:
 
 We can leverage IConfiguration directly to get settings stored locally in local.settings.json or get settings stored in Azure Web App's Application settings.
 
@@ -155,6 +155,34 @@ namespace Eklee.Azure.Functions.Http.Example
         {
             var value = _configuration.GetValue<string>("AzureWebJobsStorage");
             return value == "UseDevelopmentStorage=true";
+        }
+    }
+}
+```
+
+## Microsoft.Extensions.Logging.ILogger Usage:
+
+We can leverage ILogger directly to perform logging activities.
+
+Here's an example of using ILogger to log an info message. 
+
+```
+using Microsoft.Extensions.Logging;
+
+namespace Eklee.Azure.Functions.Http.Example
+{
+    public class MyLogDomain : IMyLogDomain
+    {
+        private readonly ILogger _logger;
+
+        public MyLogDomain(ILogger logger)
+        {
+            _logger = logger;
+        }
+
+        public void DoWork()
+        {
+            _logger.LogInformation("MyLogDomain DoWork invoked.");
         }
     }
 }

@@ -3,13 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.4.1</Version>
+    <Version>0.5.0</Version>
     <Authors>Eng-Keong David Lee</Authors>
-    <Description>The purpose of this library is to help developers with dependency injection per HTTP request context. This is currently not available via the default dependency injection infrastructure.</Description>
+    <Description>The purpose of this library is to help developers with dependency injection per HTTP request context. This is currently not available via the default dependency injection infrastructure. A secondary goal is provide easy access to common infrastructure services such as security, logging, etc.</Description>
     <RepositoryUrl>https://github.com/seekdavidlee/Eklee-Azure-Functions-Http.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>AutoFac, DI, Azure Functions, Dependency Injection, AzureAD, Http request, IConfiguration</PackageTags>
-    <PackageReleaseNotes>Support for Microsoft.Extensions.Configuration.IConfiguration to be injected and used directly. This means developers do not have to worry about hooking up their own IConfiguration implementation via ExecutionContext.</PackageReleaseNotes>
+    <PackageTags>AutoFac, DI, Azure Functions, Dependency Injection, AzureAD, Http request, IConfiguration, ILogger</PackageTags>
+    <PackageReleaseNotes>Support for Microsoft.Extensions.Logging.ILogger to be injected and used directly. This means developers do not have to worry about hooking up their own ILogger implementation.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
