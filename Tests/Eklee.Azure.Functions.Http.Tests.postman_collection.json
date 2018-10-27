@@ -492,7 +492,7 @@
 					"response": []
 				},
 				{
-					"name": "Expect200AndTrueForLocalEnv",
+					"name": "Expect200AndTrueForLocalEnvironmentVariable",
 					"event": [
 						{
 							"listen": "test",
@@ -534,6 +534,56 @@
 							"path": [
 								"api",
 								"Function4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Expect200AndBodyExistForLoggingFunctionInLocalEnv",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8e07cab7-b3e2-40f5-acf7-43c10e1b5665",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test response body is present.\", function () {",
+									"",
+									"    pm.expect(pm.response.text().length > 0).to.be.true;",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/javascript"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"key1\": \"foobar\"\n}"
+						},
+						"url": {
+							"raw": "{{endpoint}}/api/Function5",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"Function5"
 							]
 						}
 					},

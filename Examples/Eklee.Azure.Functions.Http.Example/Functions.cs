@@ -50,5 +50,15 @@ namespace Eklee.Azure.Functions.Http.Example
             // Example of how we can directly resolve a dependency.
             return await executionContext.Run<IConfigDomain, bool>(domain => Task.FromResult(domain.IsLocalEnvironment()));
         }
+
+        [ExecutionContextDependencyInjection(typeof(MyModule))]
+        [FunctionName("Function5")]
+        public static async Task<IActionResult> Run5(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)]
+            HttpRequest req, ILogger log, ExecutionContext executionContext)
+        {
+            // Example of how we can directly resolve a dependency.
+            return await executionContext.Run<IMyLogDomain, string>(domain => Task.FromResult(domain.DoWork()));
+        }
     }
 }

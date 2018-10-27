@@ -16,12 +16,14 @@ namespace Eklee.Azure.Functions.Http
             builder.RegisterModule((IModule)Activator.CreateInstance(moduleType));
             builder.RegisterType<HttpRequestContext>().As<IHttpRequestContext>().InstancePerLifetimeScope();
             builder.RegisterType<ExceptionHandlerManager>().As<IExceptionHandlerManager>();
-
+            
             builder.Register(c => new ConfigurationBuilder()
                 .SetBasePath(executionContext.FunctionAppDirectory)
                 .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables()
                 .Build()).As<IConfiguration>();
+
+            builder.Register(c => logger).As<ILogger>().InstancePerLifetimeScope();
 
             var container = builder.Build();
             var scope = container.BeginLifetimeScope();
