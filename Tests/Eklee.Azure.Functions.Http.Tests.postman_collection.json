@@ -588,6 +588,118 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Expect200WithKeyValue1FromCacheDomainFirstFromRepository",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8e07cab7-b3e2-40f5-acf7-43c10e1b5665",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test response body is present.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.result.key).to.eql(\"1\");",
+									"    pm.expect(jsonData.result.value).to.eql(\"JOHN\");",
+									"    pm.expect(jsonData.resultIsFromCache).to.eql(false);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/javascript"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"key1\": \"foobar\"\n}"
+						},
+						"url": {
+							"raw": "{{endpoint}}/api/Function6?key=1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"Function6"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Expect200WithKeyValue1FromCacheDomainFirstFromCache",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8e07cab7-b3e2-40f5-acf7-43c10e1b5665",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test response body is present.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.result.key).to.eql(\"1\");",
+									"    pm.expect(jsonData.result.value).to.eql(\"JOHN\");",
+									"    pm.expect(jsonData.resultIsFromCache).to.eql(true);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/javascript"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"key1\": \"foobar\"\n}"
+						},
+						"url": {
+							"raw": "{{endpoint}}/api/Function6?key=1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"Function6"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
