@@ -198,7 +198,7 @@ Here's an example of using ICacheManager to cache a value for a duration of time
 public DomainWithCache(ICacheManager cacheManager, IRepository repository)
 {
     _cacheManager = cacheManager;
-	_repository = repository;
+    _repository = repository;
     ...
 }
 
