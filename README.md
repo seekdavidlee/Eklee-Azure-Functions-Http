@@ -195,10 +195,10 @@ We can leverage ICacheManager to perform caching work.
 Here's an example of using ICacheManager to cache a value for a duration of time (5 seconds in the example below) if it does not exist. CacheResult is returned where we can determine if the result is from Cache or from the repository query.
 
 ```
-public DomainWithCache(ICacheManager cacheManager)
+public DomainWithCache(ICacheManager cacheManager, IRepository repository)
 {
     _cacheManager = cacheManager;
-
+	_repository = repository;
     ...
 }
 
