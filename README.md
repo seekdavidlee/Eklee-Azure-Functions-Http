@@ -190,9 +190,13 @@ namespace Eklee.Azure.Functions.Http.Example
 
 ## ICacheManager Usage:
 
-We can leverage ICacheManager to perform caching work.
+We can leverage ICacheManager to perform caching work. First, choose your preferred DistributedCache as you are setting up your Module. Note that MemoryDistributedCache is just an example. In a production senario, you may choose something like Azure Redis.
 
-Here's an example of using ICacheManager to cache a value for a duration of time (5 seconds in the example below) if it does not exist. CacheResult is returned where we can determine if the result is from Cache or from the repository query.
+```
+builder.UseDistributedCache<MemoryDistributedCache>();
+```
+
+Next, you may inject ICacheManager for usage. Here's an example of using ICacheManager to cache a value from repository for a duration of time (5 seconds in the example below) if it does not already exist. CacheResult is returned where we can determine if the result is from Cache or from the repository query.
 
 ```
 public DomainWithCache(ICacheManager cacheManager, IRepository repository)
