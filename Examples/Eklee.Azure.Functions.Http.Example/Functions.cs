@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Eklee.Azure.Functions.Http.Example.Models;
+using Eklee.Azure.Functions.Http.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -59,6 +60,16 @@ namespace Eklee.Azure.Functions.Http.Example
         {
             // Example of how we can directly resolve a dependency.
             return await executionContext.Run<IMyLogDomain, string>(domain => Task.FromResult(domain.DoWork()));
+        }
+
+        [ExecutionContextDependencyInjection(typeof(MyModule))]
+        [FunctionName("Function6")]
+        public static async Task<IActionResult> Run6(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)]
+            HttpRequest req, ILogger log, ExecutionContext executionContext)
+        {
+            // Example of how we can directly resolve a dependency.
+            return await executionContext.Run<IDomainWithCache, CacheResult<KeyValueDto>>(async domain => await domain.GetAsync(req.Query["key"]));
         }
     }
 }
