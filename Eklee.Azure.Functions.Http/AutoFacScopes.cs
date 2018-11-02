@@ -10,23 +10,29 @@ namespace Eklee.Azure.Functions.Http
 {
     internal static class AutoFacScopes
     {
+        private static IContainer _container;
+
         internal static void Register(string instanceId, Type moduleType, HttpRequest httpRequest, ILogger logger, ExecutionContext executionContext)
         {
-            var builder = new ContainerBuilder();
-            builder.RegisterModule((IModule)Activator.CreateInstance(moduleType));
-            builder.RegisterType<HttpRequestContext>().As<IHttpRequestContext>().InstancePerLifetimeScope();
-            builder.RegisterType<ExceptionHandlerManager>().As<IExceptionHandlerManager>();
-            
-            builder.Register(c => new ConfigurationBuilder()
-                .SetBasePath(executionContext.FunctionAppDirectory)
-                .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
-                .AddEnvironmentVariables()
-                .Build()).As<IConfiguration>();
+            if (_container == null)
+            {
+                var builder = new ContainerBuilder();
+                builder.RegisterModule((IModule)Activator.CreateInstance(moduleType));
+                builder.RegisterType<HttpRequestContext>().As<IHttpRequestContext>().InstancePerLifetimeScope();
+                builder.RegisterType<ExceptionHandlerManager>().As<IExceptionHandlerManager>();
 
-            builder.Register(c => logger).As<ILogger>().InstancePerLifetimeScope();
+                builder.Register(c => new ConfigurationBuilder()
+                    .SetBasePath(executionContext.FunctionAppDirectory)
+                    .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
+                    .AddEnvironmentVariables()
+                    .Build()).As<IConfiguration>();
 
-            var container = builder.Build();
-            var scope = container.BeginLifetimeScope();
+                builder.Register(c => logger).As<ILogger>().InstancePerLifetimeScope();
+
+                _container = builder.Build();
+            }
+
+            var scope = _container.BeginLifetimeScope();
 
             var httpRequestContext = scope.Resolve<IHttpRequestContext>();
             httpRequestContext.Logger = logger;

@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Eklee.Azure.Functions.Http.Example
 {
@@ -17,6 +18,9 @@ namespace Eklee.Azure.Functions.Http.Example
 
             builder.RegisterType<MyArgumentExceptionHandler>().As<IExceptionHandler>();
             builder.RegisterType<MyCustomExceptionHandler>().As<IExceptionHandler>();
+
+            builder.RegisterType<DomainWithCache>().As<IDomainWithCache>();
+            builder.UseDistributedCache<MemoryDistributedCache>();
         }
     }
 }

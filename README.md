@@ -187,3 +187,27 @@ namespace Eklee.Azure.Functions.Http.Example
     }
 }
 ```
+
+## ICacheManager Usage:
+
+We can leverage ICacheManager to perform caching work.
+
+Here's an example of using ICacheManager to cache a value for a duration of time (5 seconds in the example below) if it does not exist. CacheResult is returned where we can determine if the result is from Cache or from the repository query.
+
+```
+public DomainWithCache(ICacheManager cacheManager)
+{
+    _cacheManager = cacheManager;
+
+    ...
+}
+
+public async Task<CacheResult<KeyValueDto>> GetAsync(string key)
+{
+    return await _cacheManager.TryGetOrSetIfNotExistAsync(() => _repository.Single(x => x.Key == key), key,
+        new DistributedCacheEntryOptions
+        {
+            AbsoluteExpiration = DateTimeOffset.UtcNow.AddSeconds(5)
+        });
+}
+```
