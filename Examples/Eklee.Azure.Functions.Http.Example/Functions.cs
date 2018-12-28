@@ -71,5 +71,16 @@ namespace Eklee.Azure.Functions.Http.Example
             // Example of how we can directly resolve a dependency.
             return await executionContext.Run<IDomainWithCache, CacheResult<KeyValueDto>>(async domain => await domain.GetAsync(req.Query["key"]));
         }
-    }
+
+	    [ExecutionContextDependencyInjection(typeof(MyModule))]
+	    [FunctionName("Module1Function1")]
+	    public static IActionResult Run(
+		    [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)]
+		    HttpRequest req, ILogger log, ExecutionContext executionContext)
+	    {
+		    // Example of how we can access the resolver to resolve a dependency.
+		    var resolver = executionContext.GetResolver();
+		    return new OkObjectResult(new { Message = resolver.Get<ISomeDomainA>().DoWork() });
+	    }
+	}
 }
