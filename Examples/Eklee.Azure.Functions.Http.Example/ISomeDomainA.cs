@@ -2,6 +2,6 @@
 {
     public interface ISomeDomainA
     {
-        void DoWork();
+        string DoWork();
     }
 }

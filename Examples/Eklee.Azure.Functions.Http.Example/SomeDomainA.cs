@@ -12,9 +12,10 @@
             _myHttpLogger.LogMessage("Creating a new instance of SomeDomainA");
         }
 
-        public void DoWork()
+        public string DoWork()
         {
             _myHttpLogger.LogMessage($"SomeDomainA work: {_myRequestScope.Id}");
+	        return "SomeDomainAModule1";
         }
     }
 }

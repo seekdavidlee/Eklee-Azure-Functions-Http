@@ -9,7 +9,7 @@
     <projectUrl>https://github.com/seekdavidlee/Eklee-Azure-Functions-Http</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The purpose of this library is to help developers with dependency injection per HTTP request context. This is currently not available via the default dependency injection infrastructure. A secondary goal is provide easy access to common infrastructure services such as security, logging, etc.</description>
-    <releaseNotes>* Fixed a major issue where we are unable to register a Service as Singleton. * Implemented support for Microsoft's distributed cache interface using ICacheManager. </releaseNotes>
+    <releaseNotes>* Support for multiple Modules and use latest version of Functions Sdk. </releaseNotes>
     <tags>AutoFac, DI, Azure Functions, Dependency Injection, AzureAD, Http request, IConfiguration, ILogger, .NET, Distributed, Cache</tags>
     <dependencies>
       <dependency id="Autofac" version="4.8.1" />
