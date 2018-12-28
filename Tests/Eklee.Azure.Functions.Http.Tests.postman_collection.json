@@ -624,7 +624,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"key1\": \"foobar\"\n}"
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{endpoint}}/api/Function6?key=1",
@@ -680,7 +680,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"key1\": \"foobar\"\n}"
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{endpoint}}/api/Function6?key=1",
@@ -696,6 +696,175 @@
 									"key": "key",
 									"value": "1"
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Modules",
+			"item": [
+				{
+					"name": "AbleToGetCorrectDomainFromModule2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b4a2ac8a-4475-45de-9e6e-1c2cdc8e75e7",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test response body is present.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"SomeDomainAModule2\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{endpoint}}/api/Module2Function1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"Module2Function1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AbleToGetCorrectDomainFromModule3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b4a2ac8a-4475-45de-9e6e-1c2cdc8e75e7",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test response body is present.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"SomeDomainAModule3\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{endpoint}}/api/Module3Function1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"Module3Function1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AbleToGetCorrectDomainFromModule4",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b4a2ac8a-4475-45de-9e6e-1c2cdc8e75e7",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test response body is present.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"SomeDomainAModule4\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{endpoint}}/api/Module4Function1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"Module4Function1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AbleToGetCorrectDomainFromModule1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b4a2ac8a-4475-45de-9e6e-1c2cdc8e75e7",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test response body is present.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"SomeDomainAModule1\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{endpoint}}/api/Module1Function1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"Module1Function1"
 							]
 						}
 					},
