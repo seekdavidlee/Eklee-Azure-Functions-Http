@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
@@ -13,14 +14,17 @@ namespace Eklee.Azure.Functions.Http
 	public class JwtTokenValidator : IJwtTokenValidator
 	{
 		private readonly IHttpRequestContext _httpRequestContext;
+		private readonly ILogger _logger;
 		private readonly TokenValidationParameters _tokenValidationParameters;
 
 		public JwtTokenValidator(
 			ICacheManager cacheManager,
 			IHttpRequestContext httpRequestContext,
-			IJwtTokenValidatorParameters tokenValidatorParameters)
+			IJwtTokenValidatorParameters tokenValidatorParameters,
+			ILogger logger)
 		{
 			_httpRequestContext = httpRequestContext;
+			_logger = logger;
 			_tokenValidationParameters = new TokenValidationParameters
 			{
 				ValidateIssuer = true,
@@ -48,6 +52,8 @@ namespace Eklee.Azure.Functions.Http
 								result = httpClient.GetStringAsync(jwtMetaInfo.DiscoveryKeysUri)
 									.ConfigureAwait(false).GetAwaiter().GetResult();
 
+								logger.LogInformation($"Found keys information for issuer: {found}. {result}");
+
 								var jwtKeys = JsonConvert.DeserializeObject<JwtKeys>(result);
 
 								return new JwtMetaInfoKeyCerts
@@ -66,6 +72,12 @@ namespace Eklee.Azure.Functions.Http
 								return (SecurityKey)new X509SecurityKey(cert);
 							});
 						}
+
+						logger.LogInformation($"Issuer: {securityToken.Issuer} does not exist.");
+					}
+					else
+					{
+						logger.LogInformation("Security token does not contain issuer.");
 					}
 
 					return null;
@@ -89,6 +101,7 @@ namespace Eklee.Azure.Functions.Http
 				return ValidateBearerToken(authorizationHeaders.FirstOrDefault());
 			}
 
+			_logger.LogInformation("Authorization header is missing!");
 			return false;
 		}
 
@@ -108,6 +121,8 @@ namespace Eklee.Azure.Functions.Http
 					return true;
 				}
 			}
+
+			_logger.LogInformation("Bearer token is missing from Authorization Header!");
 			return false;
 		}
 	}

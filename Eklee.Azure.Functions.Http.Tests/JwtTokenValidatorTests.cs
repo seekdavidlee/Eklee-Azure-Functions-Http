@@ -4,6 +4,7 @@ using Eklee.Azure.Functions.Http.Models;
 using Eklee.Azure.Functions.Http.Tests.Core;
 using Eklee.Azure.Functions.Http.Tests.Models;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using NSubstitute;
 using Shouldly;
@@ -35,7 +36,7 @@ namespace Eklee.Azure.Functions.Http.Tests
 			var mock = Substitute.For<IJwtTokenValidatorParameters>();
 			mock.Audience.Returns(_resourceOwnerTokenProvider.LocalSettings1.Audience);
 			mock.Issuers.Returns(_resourceOwnerTokenProvider.LocalSettings1.Issuers);
-			_jwtTokenValidator = new JwtTokenValidator(_cacheManager, _httpRequestContext, mock);
+			_jwtTokenValidator = new JwtTokenValidator(_cacheManager, _httpRequestContext, mock, Substitute.For<ILogger>());
 		}
 
 		private void UseLocalSettings2()
@@ -43,7 +44,7 @@ namespace Eklee.Azure.Functions.Http.Tests
 			var mock = Substitute.For<IJwtTokenValidatorParameters>();
 			mock.Audience.Returns(_resourceOwnerTokenProvider.LocalSettings2.Audience);
 			mock.Issuers.Returns(_resourceOwnerTokenProvider.LocalSettings2.Issuers);
-			_jwtTokenValidator = new JwtTokenValidator(_cacheManager, _httpRequestContext, mock);
+			_jwtTokenValidator = new JwtTokenValidator(_cacheManager, _httpRequestContext, mock, Substitute.For<ILogger>());
 		}
 
 		private void UseLocalSettings3()
@@ -51,7 +52,7 @@ namespace Eklee.Azure.Functions.Http.Tests
 			var mock = Substitute.For<IJwtTokenValidatorParameters>();
 			mock.Audience.Returns(_resourceOwnerTokenProvider.LocalSettings3.Audience);
 			mock.Issuers.Returns(_resourceOwnerTokenProvider.LocalSettings3.Issuers);
-			_jwtTokenValidator = new JwtTokenValidator(_cacheManager, _httpRequestContext, mock);
+			_jwtTokenValidator = new JwtTokenValidator(_cacheManager, _httpRequestContext, mock, Substitute.For<ILogger>());
 		}
 
 		[Fact]

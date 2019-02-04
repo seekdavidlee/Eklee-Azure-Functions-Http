@@ -6,6 +6,7 @@ using Eklee.Azure.Functions.Http.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -23,29 +24,50 @@ namespace Eklee.Azure.Functions.Http
 			return executionContext.GetResolver().Get<T>();
 		}
 
-		public static async Task<IActionResult> Run<TDomain, TOutput>(this ExecutionContext executionContext, Func<TDomain, Task<TOutput>> action)
+		public static ActionResult ValidateJwt(this ExecutionContext executionContext)
 		{
 			var resolver = executionContext.GetResolver();
+			var logger = resolver.Get<ILogger>();
+
 			var jwtTokenValidator = resolver.GetOptional<IJwtTokenValidator>();
 
 			if (jwtTokenValidator != null)
 			{
 				try
 				{
-					if (!jwtTokenValidator.Validate()) return new UnauthorizedResult();
+					if (!jwtTokenValidator.Validate())
+					{
+						logger.LogInformation("Jwt token is invalid.");
+						return new UnauthorizedResult();
+					}
 				}
-				catch (SecurityTokenInvalidAudienceException)
+				catch (SecurityTokenInvalidAudienceException securityTokenInvalidAudienceException)
 				{
+					logger.LogInformation(securityTokenInvalidAudienceException.Message);
 					return new UnauthorizedResult();
 				}
-				catch (SecurityTokenSignatureKeyNotFoundException)
+				catch (SecurityTokenSignatureKeyNotFoundException securityTokenSignatureKeyNotFoundException)
 				{
+					logger.LogInformation(securityTokenSignatureKeyNotFoundException.Message);
 					return new UnauthorizedResult();
 				}
-				catch (SecurityTokenExpiredException)
+				catch (SecurityTokenExpiredException securityTokenExpiredException)
 				{
+					logger.LogInformation(securityTokenExpiredException.Message);
 					return new UnauthorizedResult();
 				}
+			}
+
+			return null;
+		}
+
+		public static async Task<IActionResult> Run<TDomain, TOutput>(this ExecutionContext executionContext, Func<TDomain, Task<TOutput>> action)
+		{
+			var resolver = executionContext.GetResolver();
+			var validateResult = executionContext.ValidateJwt();
+			if (validateResult != null)
+			{
+				return validateResult;
 			}
 
 			var domain = resolver.Get<TDomain>();

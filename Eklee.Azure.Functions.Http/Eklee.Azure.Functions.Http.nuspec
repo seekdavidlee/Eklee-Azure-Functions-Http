@@ -1,20 +1,22 @@
 <?xml version="1.0"?>
 <package >
-  <metadata>
-    <id>Eklee.Azure.Functions.Http</id>
-    <version>0.8.0</version>
-    <title>Eklee.Azure.Functions.Http</title>
-    <authors>Eng-Keong David Lee</authors>
-    <owners>Eng-Keong David Lee</owners>
-    <projectUrl>https://github.com/seekdavidlee/Eklee-Azure-Functions-Http</projectUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>The purpose of this library is to help developers with dependency injection per HTTP request context. This is currently not available via the default dependency injection infrastructure. A secondary goal is provide easy access to common infrastructure services such as security, logging, etc.</description>
-    <releaseNotes>* Support for JWT validation. </releaseNotes>
-    <tags>AutoFac, DI, Azure Functions, Dependency Injection, AzureAD, Http request, IConfiguration, ILogger, .NET, Distributed, Cache</tags>
-    <dependencies>
-      <dependency id="Autofac" version="4.8.1" />
-      <dependency id="Microsoft.Extensions.Caching.Abstractions" version="2.1.2"/>
-      <dependency id="Microsoft.NET.Sdk.Functions" version="1.0.24" />
-    </dependencies>
-  </metadata>
+	<metadata>
+		<id>Eklee.Azure.Functions.Http</id>
+		<version>0.8.1</version>
+		<title>Eklee.Azure.Functions.Http</title>
+		<authors>Eng-Keong David Lee</authors>
+		<owners>Eng-Keong David Lee</owners>
+		<projectUrl>https://github.com/seekdavidlee/Eklee-Azure-Functions-Http</projectUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>The purpose of this library is to help developers with dependency injection per HTTP request context. This is currently not available via the default dependency injection infrastructure. A secondary goal is provide easy access to common infrastructure services such as security, logging, etc.</description>
+		<releaseNotes>* Support for JWT validation. </releaseNotes>
+		<tags>AutoFac, DI, Azure Functions, Dependency Injection, AzureAD, Http request, IConfiguration, ILogger, .NET, Distributed, Cache</tags>
+		<dependencies>
+			<dependency id="Autofac" version="4.8.1" />
+			<dependency id="Microsoft.Extensions.Caching.Abstractions" version="2.1.2"/>
+			<dependency id="Microsoft.IdentityModel.Protocols.OpenIdConnect" version="5.4.0"/>
+			<dependency id="Microsoft.NET.Sdk.Functions" version="1.0.24" />
+			<dependency id="System.IdentityModel.Tokens.Jwt" version="5.4.0" />
+		</dependencies>
+	</metadata>
 </package>
