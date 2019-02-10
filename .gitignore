@@ -263,3 +263,5 @@ paket-files/
 __pycache__/
 *.pyc
 /Examples/Eklee.Azure.Functions.Http.Example/package-lock.json
+/Eklee.Azure.Functions.Http.Tests/local*.json
+/Eklee.Azure.Functions.Http.Tests/tokens.json

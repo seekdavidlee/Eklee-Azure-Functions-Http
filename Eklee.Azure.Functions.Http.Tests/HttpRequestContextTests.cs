@@ -2,7 +2,6 @@
 using System.IO;
 using System.Text;
 using Eklee.Azure.Functions.Http.Tests.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using NSubstitute;
