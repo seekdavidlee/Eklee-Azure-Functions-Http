@@ -73,8 +73,8 @@ namespace Eklee.Azure.Functions.Http.Tests
 			// ReSharper disable once PossibleNullReferenceException
 			username.Value.ShouldBe(_resourceOwnerTokenProvider.LocalSettings1.User1.Username);
 
-			var role = _security.ClaimsPrincipal.Claims.Single(x => x.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
-			role.Value.ShouldBe(_resourceOwnerTokenProvider.LocalSettings1.User1.Role);
+			var roles = _security.ClaimsPrincipal.Claims.Where(x => x.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+			roles.Any(x => x.Value == _resourceOwnerTokenProvider.LocalSettings1.User1.Role).ShouldBeTrue();
 		}
 
 		[Fact]
@@ -97,23 +97,6 @@ namespace Eklee.Azure.Functions.Http.Tests
 
 			var role = _security.ClaimsPrincipal.Claims.SingleOrDefault(x => x.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
 			role.ShouldBeNull();
-		}
-
-		[Fact]
-		public void ValidateExpiredTokenIsInvalid()
-		{
-			UseLocalSettings1();
-
-			var tokenItems = _resourceOwnerTokenProvider.LoadTokens("tokens.json");
-
-			var token = new JwtToken { AccessToken = tokenItems.Tokens.Single(x => x.Type == "expired").Value };
-
-			var mock = new MockHttpRequest();
-			mock.Headers.Add("Authorization", $"Bearer {token.AccessToken}");
-
-			_httpRequestContext.Request = mock;
-
-			Should.Throw<SecurityTokenExpiredException>(() => _jwtTokenValidator.Validate());
 		}
 
 		[Fact]
