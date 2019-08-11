@@ -2,7 +2,7 @@
 <package >
 	<metadata>
 		<id>Eklee.Azure.Functions.Http</id>
-		<version>0.8.3</version>
+		<version>0.8.4</version>
 		<title>Eklee.Azure.Functions.Http</title>
 		<authors>Eng-Keong David Lee</authors>
 		<owners>Eng-Keong David Lee</owners>
@@ -13,11 +13,11 @@
 		<releaseNotes>* Use latest packages. </releaseNotes>
 		<tags>AutoFac, DI, Azure Functions, Dependency Injection, AzureAD, Http request, IConfiguration, ILogger, .NET, Distributed, Cache</tags>
 		<dependencies>
-			<dependency id="Autofac" version="4.9.2" />
+			<dependency id="Autofac" version="4.9.3" />
 			<dependency id="Microsoft.Extensions.Caching.Abstractions" version="2.2.0"/>
-			<dependency id="Microsoft.IdentityModel.Protocols.OpenIdConnect" version="5.4.0"/>
+			<dependency id="Microsoft.IdentityModel.Protocols.OpenIdConnect" version="5.5.0"/>
 			<dependency id="Microsoft.NET.Sdk.Functions" version="1.0.29" />
-			<dependency id="System.IdentityModel.Tokens.Jwt" version="5.4.0" />
+			<dependency id="System.IdentityModel.Tokens.Jwt" version="5.5.0" />
 		</dependencies>
 	</metadata>
 	<files>
