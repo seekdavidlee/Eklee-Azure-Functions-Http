@@ -2,7 +2,7 @@
 <package >
 	<metadata>
 		<id>Eklee.Azure.Functions.Http</id>
-		<version>0.8.5</version>
+		<version>0.8.6</version>
 		<title>Eklee.Azure.Functions.Http</title>
 		<authors>Eng-Keong David Lee</authors>
 		<owners>Eng-Keong David Lee</owners>

@@ -2,6 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Microsoft.Extensions.Caching.Distributed;
@@ -53,7 +54,7 @@ namespace Eklee.Azure.Functions.Http
 						var found = validationParameters.ValidIssuers.SingleOrDefault(x => x == securityToken.Issuer);
 						if (found != null)
 						{
-							var certs = cacheManager.TryGetOrSetIfNotExistAsync(() =>
+							var jwtKeys = cacheManager.TryGetOrSetIfNotExistAsync(() =>
 							{
 								var httpClient = new HttpClient { BaseAddress = new Uri(GetBaseUrl(found)) };
 								var result = httpClient.GetStringAsync(GetOpenIdConfiguration())
@@ -66,22 +67,32 @@ namespace Eklee.Azure.Functions.Http
 
 								logger.LogInformation($"Found keys information for issuer: {found}. {result}");
 
-								var jwtKeys = JsonConvert.DeserializeObject<JwtKeys>(result);
-
-								return new JwtMetaInfoKeyCerts
-								{
-									Values = jwtKeys.Keys.Select(x => x.X5c.First()).ToArray()
-								};
+								return JsonConvert.DeserializeObject<JwtKeys>(result);
 							}, securityToken.Issuer, new DistributedCacheEntryOptions
 							{
 								AbsoluteExpiration = DateTimeOffset.UtcNow.AddDays(1)
 							}).ConfigureAwait(false).GetAwaiter().GetResult().Result;
 
-
-							return certs.Values.Select(value =>
+							return jwtKeys.Keys.Select(x =>
 							{
-								var cert = new X509Certificate2(Encoding.UTF8.GetBytes(value));
-								return (SecurityKey)new X509SecurityKey(cert);
+								if (x.X5c != null && x.X5c.Length > 0)
+								{
+									var cert = new X509Certificate2(Encoding.UTF8.GetBytes(x.X5c.First()));
+									return (SecurityKey)new X509SecurityKey(cert) { KeyId = x.Kid };
+								}
+
+								// Ref: https://blog.simontimms.com/2019/02/13/2019-02-12-Getting-b2c-claims-in-an-azure-function/
+								byte[] exponent = Base64UrlDecode(x.E);
+								byte[] modulus = Base64UrlDecode(x.N);
+
+								return new RsaSecurityKey(new RSAParameters
+								{
+									Exponent = exponent,
+									Modulus = modulus
+								})
+								{
+									KeyId = x.Kid
+								};
 							});
 						}
 
@@ -95,6 +106,22 @@ namespace Eklee.Azure.Functions.Http
 					return null;
 				}
 			};
+		}
+
+		private static byte[] Base64UrlDecode(string arg)
+		{
+			string s = arg;
+			s = s.Replace('-', '+'); // 62nd char of encoding
+			s = s.Replace('_', '/'); // 63rd char of encoding
+			switch (s.Length % 4) // Pad with trailing '='s
+			{
+				case 0: break; // No pad chars in this case
+				case 2: s += "=="; break; // Two pad chars
+				case 3: s += "="; break; // One pad char
+				default:
+					throw new Exception("Illegal base64url string!");
+			}
+			return Convert.FromBase64String(s); // Standard base64 decoder
 		}
 
 		public JwtTokenValidator(IHttpRequestContext httpRequestContext,

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
 namespace Eklee.Azure.Functions.Http
