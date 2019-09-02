@@ -17,6 +17,18 @@ namespace Eklee.Azure.Functions.Http
 		private readonly ILogger _logger;
 		private readonly TokenValidationParameters _tokenValidationParameters;
 
+		protected virtual string GetBaseUrl(string issuer)
+		{
+			return issuer;
+		}
+
+		protected const string OPEN_ID = ".well-known/openid-configuration";
+
+		protected virtual string GetOpenIdConfiguration()
+		{
+			return OPEN_ID;
+		}
+
 		public JwtTokenValidator(
 			ICacheManager cacheManager,
 			IHttpRequestContext httpRequestContext,
@@ -43,8 +55,8 @@ namespace Eklee.Azure.Functions.Http
 						{
 							var certs = cacheManager.TryGetOrSetIfNotExistAsync(() =>
 							{
-								var httpClient = new HttpClient { BaseAddress = new Uri(found) };
-								var result = httpClient.GetStringAsync(".well-known/openid-configuration")
+								var httpClient = new HttpClient { BaseAddress = new Uri(GetBaseUrl(found)) };
+								var result = httpClient.GetStringAsync(GetOpenIdConfiguration())
 									.ConfigureAwait(false).GetAwaiter().GetResult();
 								var jwtMetaInfo = JsonConvert.DeserializeObject<JwtMetaInfo>(result);
 

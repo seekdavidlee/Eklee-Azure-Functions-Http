@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.8.4</Version>
+    <Version>0.8.5</Version>
     <Authors>Eng-Keong David Lee</Authors>
     <Description>The purpose of this library is to help developers with dependency injection per HTTP request context. This is currently not available via the default dependency injection infrastructure. A secondary goal is provide easy access to common infrastructure services such as security, logging, etc.</Description>
     <RepositoryUrl>https://github.com/seekdavidlee/Eklee-Azure-Functions-Http.git</RepositoryUrl>
@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.9.3" />
+    <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="5.5.0" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.29" />
