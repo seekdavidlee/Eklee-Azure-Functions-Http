@@ -114,5 +114,14 @@ namespace Eklee.Azure.Functions.Http
 			containerBuilder.RegisterType<T>().As<IJwtTokenValidatorParameters>().InstancePerLifetimeScope();
 			return containerBuilder;
 		}
+
+		public static ContainerBuilder UseJwtAuthorization<TJwtTokenValidatorParameters, TJwtTokenValidator>(this ContainerBuilder containerBuilder)
+			where TJwtTokenValidatorParameters : IJwtTokenValidatorParameters
+			where TJwtTokenValidator : IJwtTokenValidator
+		{
+			containerBuilder.RegisterType<TJwtTokenValidator>().As<IJwtTokenValidator>().InstancePerLifetimeScope();
+			containerBuilder.RegisterType<TJwtTokenValidatorParameters>().As<IJwtTokenValidatorParameters>().InstancePerLifetimeScope();
+			return containerBuilder;
+		}
 	}
 }
