@@ -53,7 +53,14 @@ namespace Eklee.Azure.Functions.Http.Tests.Core
 				{
 					var responseBody = await response.Content.ReadAsStringAsync();
 
-					response.EnsureSuccessStatusCode();
+					try
+					{
+						response.EnsureSuccessStatusCode();
+					}
+					catch (HttpRequestException)
+					{
+						throw new System.Exception(responseBody);
+					}
 
 					return JsonConvert.DeserializeObject<JwtToken>(responseBody);
 				}
@@ -79,7 +86,6 @@ namespace Eklee.Azure.Functions.Http.Tests.Core
 	public class ApplicationItem
 	{
 		public string Id { get; set; }
-		public string Name { get; set; }
 		public string Secret { get; set; }
 	}
 
