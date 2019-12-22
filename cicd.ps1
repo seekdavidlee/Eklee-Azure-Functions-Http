@@ -1,12 +1,13 @@
-param(
-	[string]$message,
-	[string]$version)
 
 	$ErrorActionPreference = "Stop"
 
-	pushd Eklee.Azure.Functions.Http.Tests
+	Push-Location Eklee.Azure.Functions.Http.Tests
 	dotnet test
-	popd
+	Pop-Location
+
+	if ($lastexitcode -ne 0){
+		return;
+	}
 
 	$buildConfig = "Release"
 	$app = "Eklee.Azure.Functions.Http"	

@@ -2,22 +2,22 @@
 <package >
 	<metadata>
 		<id>Eklee.Azure.Functions.Http</id>
-		<version>0.8.6</version>
+		<version>0.8.7</version>
 		<title>Eklee.Azure.Functions.Http</title>
-		<authors>Eng-Keong David Lee</authors>
-		<owners>Eng-Keong David Lee</owners>
+		<authors>Eng Keong David Lee</authors>
+		<owners>Eng Keong David Lee</owners>
 		<license type="file">LICENSE.txt</license>
 		<projectUrl>https://github.com/seekdavidlee/Eklee-Azure-Functions-Http</projectUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>The purpose of this library is to help developers with dependency injection per HTTP request context. This is currently not available via the default dependency injection infrastructure. A secondary goal is provide easy access to common infrastructure services such as security, logging, etc.</description>
-		<releaseNotes>* Support overrides for B2C senarios. Use latest packages. </releaseNotes>
+		<releaseNotes>Use latest packages.</releaseNotes>
 		<tags>AutoFac, DI, Azure Functions, Dependency Injection, AzureAD, Http request, IConfiguration, ILogger, .NET, Distributed, Cache</tags>
 		<dependencies>
 			<dependency id="Autofac" version="4.9.4" />
 			<dependency id="Microsoft.Extensions.Caching.Abstractions" version="2.2.0"/>
-			<dependency id="Microsoft.IdentityModel.Protocols.OpenIdConnect" version="5.5.0"/>
-			<dependency id="Microsoft.NET.Sdk.Functions" version="1.0.29" />
-			<dependency id="System.IdentityModel.Tokens.Jwt" version="5.5.0" />
+			<dependency id="Microsoft.IdentityModel.Protocols.OpenIdConnect" version="5.6.0"/>
+			<dependency id="Microsoft.NET.Sdk.Functions" version="1.0.31" />
+			<dependency id="System.IdentityModel.Tokens.Jwt" version="5.6.0" />
 		</dependencies>
 	</metadata>
 	<files>
