@@ -11,7 +11,7 @@ namespace Eklee.Azure.Functions.Http
 {
 	internal static class AutoFacScopes
 	{
-		private static readonly Dictionary<string, IContainer> Containers =
+		private static readonly Dictionary<string, IContainer> _containers =
 			new Dictionary<string, IContainer>();
 
 		internal static void Register(string instanceId, Type moduleType,
@@ -22,7 +22,7 @@ namespace Eklee.Azure.Functions.Http
 			string key = moduleType.FullName;
 
 			// ReSharper disable once AssignNullToNotNullAttribute
-			if (!Containers.ContainsKey(key))
+			if (!_containers.ContainsKey(key))
 			{
 				var builder = new ContainerBuilder();
 				builder.RegisterModule((IModule)Activator.CreateInstance(moduleType));
@@ -38,11 +38,11 @@ namespace Eklee.Azure.Functions.Http
 				builder.Register(c => logger).As<ILogger>().InstancePerLifetimeScope();
 
 				container = builder.Build();
-				Containers.Add(key, container);
+				_containers.Add(key, container);
 			}
 			else
 			{
-				container = Containers[key];
+				container = _containers[key];
 
 			}
 

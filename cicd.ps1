@@ -19,7 +19,7 @@
 	popd
 
 	pushd Examples\Eklee.Azure.Functions.Http.Example\bin\Release\netstandard2.0
-	npm install --save-dev azure-functions-core-tools
+	npm install --save-dev azure-functions-core-tools@3
 	npm install --save-dev newman
 	popd
 	$hostJob = Start-Job -ScriptBlock {
@@ -64,7 +64,6 @@
 		dotnet clean --configuration $buildConfig
 		dotnet build --configuration $buildConfig
 		Move-Item -Path bin\Release\netstandard2.0\bin\$app.dll -Destination bin\Release\netstandard2.0\$app.dll
-		Remove-Item -Path bin\Release\netstandard2.0\publish -Recurse
 		popd
 		Remove-Item $currentDir\*.nupkg
 		Copy-Item $currentDir\LICENSE $currentDir\LICENSE.txt

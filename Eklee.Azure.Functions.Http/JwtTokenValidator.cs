@@ -152,9 +152,8 @@ namespace Eklee.Azure.Functions.Http
 				if (!string.IsNullOrEmpty(token))
 				{
 					// ReSharper disable once NotAccessedVariable
-					SecurityToken validatedToken;
 					JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
-					var claimsPrincipal = handler.ValidateToken(token, _tokenValidationParameters, out validatedToken);
+					var claimsPrincipal = handler.ValidateToken(token, _tokenValidationParameters, out _);
 
 					_httpRequestContext.Security.ClaimsPrincipal = claimsPrincipal;
 					return true;
