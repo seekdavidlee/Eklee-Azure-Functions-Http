@@ -63,13 +63,13 @@ namespace Eklee.Azure.Functions.Http
 
 		public static async Task<IActionResult> Run<TDomain, TOutput>(this ExecutionContext executionContext, Func<TDomain, Task<TOutput>> action)
 		{
-			var resolver = executionContext.GetResolver();
 			var validateResult = executionContext.ValidateJwt();
 			if (validateResult != null)
 			{
 				return validateResult;
 			}
 
+			var resolver = executionContext.GetResolver();
 			var domain = resolver.Get<TDomain>();
 
 			try
