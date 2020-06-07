@@ -22,7 +22,7 @@
 			<dependency id="Microsoft.Extensions.Configuration" version="3.1.4" />
 			<dependency id="Microsoft.Extensions.Logging.Abstractions" version="3.1.4" />
 			<dependency id="Microsoft.NET.Sdk.Functions" version="3.0.7" />
-			<dependency id="System.IdentityModel.Tokens.Jwt" version="5.5.0" />
+			<dependency id="System.IdentityModel.Tokens.Jwt" version="6.6.0" />
 		</dependencies>
 	</metadata>
 	<files>
