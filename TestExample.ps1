@@ -32,10 +32,10 @@ Push-Location $WorkingDirectory
 npm install --save-dev newman
 Pop-Location
 
-$content = (Get-Content -Path "$Path\Tests\Eklee.Azure.Functions.Http.Tests.postman_collection.json").Replace("http://localhost:7071", "https://$StackName.azurewebsites.net")
+$content = (Get-Content -Path "$Path\Tests\Eklee.Azure.Functions.Http.Local.postman_environment.json").Replace("http://localhost:7071", "https://$StackName.azurewebsites.net")
 $content | Out-File "$Path\Tests\Eklee.Azure.Functions.Http.Local.postman_environment.json" -Encoding ASCII
 
 $reportFilePath = "$ReportDir/report.xml"
 Push-Location $Path\Examples\Eklee.Azure.Functions.Http.Example\bin\$BuildConfig\netstandard2.0
-node_modules\.bin\newman run ..\..\..\..\..\tests\Eklee.Azure.Functions.Http.Tests.postman_collection.json -e "$EnvironmentPath\Tests\Eklee.Azure.Functions.Http.Local.postman_environment.json" --reporters 'cli,junit' --reporter-junit-export $reportFilePath --delay-request 100
+node_modules\.bin\newman run ..\..\..\..\..\tests\Eklee.Azure.Functions.Http.Tests.postman_collection.json -e "$EnvironmentPath\Tests\Eklee.Azure.Functions.Http.Local.postman_environment.json" --reporters 'cli,junit' --reporter-junit-export $reportFilePath
 Pop-Location
