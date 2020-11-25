@@ -12,6 +12,7 @@ using Xunit;
 
 namespace Eklee.Azure.Functions.Http.Tests
 {
+	[Trait(Constants.Category, Constants.IntegrationTests)]
 	public class JwtTokenValidatorTests
 	{
 		private IJwtTokenValidator _jwtTokenValidator;
