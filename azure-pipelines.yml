@@ -1,6 +1,9 @@
 pool:
   vmImage: 'windows-latest'
 
+variables:
+- group: Global
+
 steps:
 
 - task: DotNetCoreCLI@2
