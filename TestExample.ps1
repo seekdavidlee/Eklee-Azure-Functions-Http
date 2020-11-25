@@ -37,5 +37,5 @@ $content | Out-File "$Path\Tests\Eklee.Azure.Functions.Http.Local.postman_enviro
 
 $reportFilePath = "$ReportDir/report.xml"
 Push-Location $Path\Examples\Eklee.Azure.Functions.Http.Example\bin\$BuildConfig\netstandard2.0
-node_modules\.bin\newman run ..\..\..\..\..\tests\Eklee.Azure.Functions.Http.Tests.postman_collection.json -e "$EnvironmentPath\Tests\Eklee.Azure.Functions.Http.Local.postman_environment.json" --reporters 'cli,junit' --reporter-junit-export $reportFilePath
+node_modules\.bin\newman run "$EnvironmentPath\Tests\Eklee.Azure.Functions.Http.Tests.postman_collection.json" -e "$EnvironmentPath\Tests\Eklee.Azure.Functions.Http.Local.postman_environment.json" --reporters 'cli,junit' --reporter-junit-export $reportFilePath
 Pop-Location
