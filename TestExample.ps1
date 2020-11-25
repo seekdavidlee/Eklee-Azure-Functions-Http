@@ -23,7 +23,6 @@ $content = Get-Content -Path "$Path\Examples\Eklee.Azure.Functions.Http.Example\
 $audience = $content.Values.Audience
 $issuers = $content.Values.Issuers
 
-
 az functionapp config appsettings set -n $StackName -g $Name --settings "Audience=$audience" "Issuers=$issuers" | Out-Null
 
 az functionapp deployment source config-zip -g $Name -n $StackName --src "$WorkingDirectory\Deploy.zip" | Out-Null

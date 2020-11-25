@@ -35,7 +35,7 @@ Get-AzKeyVaultSecret -VaultName $Name| ForEach-Object {
     }
 }
 
-$environmentFile | ConvertTo-Json | Out-File $SourceRootDir\Tests\Eklee.Azure.Functions.Http.Tests.postman_collection.json -Encoding ASCII
+$environmentFile | ConvertTo-Json | Out-File $SourceRootDir\Tests\Eklee.Azure.Functions.Http.Local.postman_environment.json -Encoding ASCII
 
 $localSettingsFileContent = '{
 	"IsEncrypted": false,
@@ -52,6 +52,5 @@ $issuer2 = ConvertSecretToPlainText -Secret (Get-AzKeyVaultSecret -VaultName $Na
 $localSettingsFileContent = $localSettingsFileContent.Replace("%audienceId%", $audienceId)
 $localSettingsFileContent = $localSettingsFileContent.Replace("%issuer1%", $issuer1)
 $localSettingsFileContent = $localSettingsFileContent.Replace("%issuer2%", $issuer2)
-
 
 $localSettingsFileContent | Out-File $SourceRootDir\Examples\Eklee.Azure.Functions.Http.Example\local.settings.json -Encoding ASCII
