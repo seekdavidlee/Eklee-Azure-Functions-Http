@@ -12,24 +12,36 @@ $StackName = ($Name + $env:Build_BuildNumber).Replace(".", "")
 
 Compress-Archive -Path "$WorkingDirectory\*" -DestinationPath "$WorkingDirectory\Deploy.zip"
 
+Write-Host "Running deployment $StackName"
+
+$ResourceGroupName = "$Name-http"
+
 az deployment group create `
 	--name $StackName `
-	--resource-group $Name `
+	--resource-group $ResourceGroupName `
 	--template-file Templates/app.json `
 	--parameters plan_name=$StackName location=$Location | Out-Null
+
+Write-Host "Configure app settings"
 
 $content = Get-Content -Path "$Path\Examples\Eklee.Azure.Functions.Http.Example\local.settings.json" | ConvertFrom-Json
 
 $audience = $content.Values.Audience
 $issuers = $content.Values.Issuers
 
-az functionapp config appsettings set -n $StackName -g $Name --settings "Audience=$audience" "Issuers=$issuers" | Out-Null
+az functionapp config appsettings set -n $StackName -g $ResourceGroupName --settings "Audience=$audience" "Issuers=$issuers" | Out-Null
 
-az functionapp deployment source config-zip -g $Name -n $StackName --src "$WorkingDirectory\Deploy.zip" | Out-Null
+Write-Host "Deploying code"
+
+az functionapp deployment source config-zip -g $ResourceGroupName -n $StackName --src "$WorkingDirectory\Deploy.zip" | Out-Null
+
+Write-Host "Installing newman"
 
 Push-Location $WorkingDirectory
 npm install --save-dev newman
 Pop-Location
+
+Write-Host "Running postman"
 
 $content = (Get-Content -Path "$Path\Tests\Eklee.Azure.Functions.Http.Local.postman_environment.json").Replace("http://localhost:7071", "https://$StackName.azurewebsites.net")
 $content | Out-File "$Path\Tests\Eklee.Azure.Functions.Http.Local.postman_environment.json" -Encoding ASCII
