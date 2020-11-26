@@ -14,9 +14,11 @@ Compress-Archive -Path "$WorkingDirectory\*" -DestinationPath "$WorkingDirectory
 
 Write-Host "Running deployment $StackName"
 
+$ResourceGroupName = "$Name-http"
+
 az deployment group create `
 	--name $StackName `
-	--resource-group $Name `
+	--resource-group $ResourceGroupName `
 	--template-file Templates/app.json `
 	--parameters plan_name=$StackName location=$Location | Out-Null
 
