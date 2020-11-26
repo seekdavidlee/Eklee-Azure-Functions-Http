@@ -29,11 +29,11 @@ $content = Get-Content -Path "$Path\Examples\Eklee.Azure.Functions.Http.Example\
 $audience = $content.Values.Audience
 $issuers = $content.Values.Issuers
 
-az functionapp config appsettings set -n $StackName -g $Name --settings "Audience=$audience" "Issuers=$issuers" | Out-Null
+az functionapp config appsettings set -n $StackName -g $ResourceGroupName --settings "Audience=$audience" "Issuers=$issuers" | Out-Null
 
 Write-Host "Deploying code"
 
-az functionapp deployment source config-zip -g $Name -n $StackName --src "$WorkingDirectory\Deploy.zip" | Out-Null
+az functionapp deployment source config-zip -g $ResourceGroupName -n $StackName --src "$WorkingDirectory\Deploy.zip" | Out-Null
 
 Write-Host "Installing newman"
 
