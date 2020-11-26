@@ -63,7 +63,7 @@
 		pushd .\$app
 		dotnet clean --configuration $buildConfig
 		dotnet build --configuration $buildConfig
-		Move-Item -Path bin\Release\netstandard2.0\bin\$app.dll -Destination bin\Release\netstandard2.0\$app.dll
+		Move-Item -Path bin\Release\netstandard2.0\bin\$app.dll -Destination bin\Release\netstandard2.0\$app.dll -Force
 		popd
 		Remove-Item $currentDir\*.nupkg
 		Copy-Item $currentDir\LICENSE $currentDir\LICENSE.txt

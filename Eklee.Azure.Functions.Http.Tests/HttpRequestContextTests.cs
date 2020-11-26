@@ -10,6 +10,7 @@ using Xunit;
 
 namespace Eklee.Azure.Functions.Http.Tests
 {
+    [Trait(Constants.Category, Constants.UnitTests)]
     public class HttpRequestContextTests
     {
         private readonly IHttpRequestContext _httpRequestContext;
