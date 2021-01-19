@@ -10,17 +10,17 @@
 		<projectUrl>https://github.com/seekdavidlee/Eklee-Azure-Functions-Http</projectUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>The purpose of this library is to help developers with dependency injection per HTTP request context. This is currently not available via the default dependency injection infrastructure. A secondary goal is provide easy access to common infrastructure services such as security, logging, etc.</description>
-		<releaseNotes>Fix nuspec</releaseNotes>
+		<releaseNotes>Update to latest packages.</releaseNotes>
 		<tags>AutoFac, DI, Azure Functions, Dependency Injection, AzureAD, Http request, IConfiguration, ILogger, .NET, Distributed, Cache</tags>
 		<dependencies>
-			<dependency id="Autofac" version="6.0.0" />
+			<dependency id="Autofac" version="6.1.0" />
 			<dependency id="Microsoft.AspNetCore.Http.Abstractions" version="2.2.0" />
 			<dependency id="Microsoft.AspNetCore.Mvc.Abstractions" version="2.2.0" />
 			<dependency id="Microsoft.AspNetCore.Mvc.Core" version="2.2.5" />
-			<dependency id="Microsoft.Azure.WebJobs" version="3.0.23" />
-			<dependency id="Microsoft.Extensions.Caching.Abstractions" version="3.1.10" />
-			<dependency id="Microsoft.Extensions.Configuration" version="3.1.10" />
-			<dependency id="Microsoft.Extensions.Logging.Abstractions" version="3.1.10" />
+			<dependency id="Microsoft.Azure.WebJobs" version="3.0.25" />
+			<dependency id="Microsoft.Extensions.Caching.Abstractions" version="3.1.11" />
+			<dependency id="Microsoft.Extensions.Configuration" version="3.1.11" />
+			<dependency id="Microsoft.Extensions.Logging.Abstractions" version="3.1.11" />
 			<dependency id="Microsoft.NET.Sdk.Functions" version="3.0.11" />
 			<dependency id="System.IdentityModel.Tokens.Jwt" version="5.5.0" />
 		</dependencies>
