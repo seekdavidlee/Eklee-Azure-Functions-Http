@@ -1,5 +1,4 @@
 param(
-	[Parameter(Mandatory=$True)][string]$ResourceGroupName, 
 	[Parameter(Mandatory=$True)][string]$Name,
 	[Parameter(Mandatory=$True)][string]$SourceRootDir)
 

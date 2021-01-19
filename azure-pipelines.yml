@@ -21,7 +21,7 @@ steps:
     scriptType: 'FilePath'
     scriptPath: 'ConfigureTestLocalSettings.ps1'
     azurePowerShellVersion: 'latestVersion'
-    scriptArguments: -ResourceGroupName $(Global.ResourceGroupName) -Name $(Global.Name) -SourceRootDir $(Build.Repository.LocalPath)
+    scriptArguments: -Name $(Global.Name) -SourceRootDir $(Build.Repository.LocalPath)
 
 - task: PowerShell@2
   name: config_version
@@ -47,7 +47,7 @@ steps:
     scriptType: ps
     scriptLocation: scriptPath
     scriptPath: 'TestExample.ps1'
-    arguments: -Path $(Build.SourcesDirectory) -BuildConfig $(config_version.buildConfig) -ReportDir $(System.DefaultWorkingDirectory) -EnvironmentPath $(Build.Repository.LocalPath) -Name $(Global.Name) -Location $(Global.Location)
+    arguments: -Path $(Build.SourcesDirectory) -BuildConfig $(config_version.buildConfig) -ReportDir $(System.DefaultWorkingDirectory) -EnvironmentPath $(Build.Repository.LocalPath) -Name $(Global.Name) -Location $(Global.Location) -ResourceGroupName $(Global.ResourceGroupName)
 
 - task: PublishTestResults@2
   displayName: Publish test results
